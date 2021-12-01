@@ -4,50 +4,79 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    enum typeOfMovement
+    {
+        OnKey,
+        OnKeyDown
+    }
+    [SerializeField] typeOfMovement moveType;
     [SerializeField] float speed = 10;
+    [SerializeField] float movementDelay = 0.25f;
+    float actualTime;
     [SerializeField] Transform movePoint;
-    [SerializeField] Animator anim;
+    //[SerializeField] Animator anim;
     // Start is called before the first frame update
     void Start()
     {
         movePoint.parent = null;
     }
-
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+        if(moveType == typeOfMovement.OnKey && actualTime < movementDelay)
+        {
+            actualTime += Time.deltaTime;
+        }
         
-        if(Vector3.Distance(transform.position, movePoint.position) <= 0.05 && Input.anyKeyDown )
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+        if(GetMovementType())
         {
             float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
             float verticalAxisValue = Input.GetAxisRaw("Vertical");
+
             if(Mathf.Abs(horizontalAxisValue) == 1)
             {
+                actualTime = 0;
                 if(horizontalAxisValue < 0)
                     transform.rotation = Quaternion.Euler(0, -90, 0);
                 else
                     transform.rotation = Quaternion.Euler(0, 90, 0);
                 //HACER ESTO UN ACTION
-                anim.SetBool("IsMoving",true);
+                //anim.SetBool("IsMoving",true);
                 movePoint.position += new Vector3(horizontalAxisValue * 2, 0, 0);
             }
-
-            if (Mathf.Abs(verticalAxisValue) == 1)
+            else if (Mathf.Abs(verticalAxisValue) == 1)
             {
+                actualTime = 0;
                 if (verticalAxisValue < 0)
                     transform.rotation = Quaternion.Euler(0, 180, 0);
                 else
                     transform.rotation = Quaternion.identity;
 
                 //HACER ESTO UN ACTION
-                anim.SetBool("IsMoving",true);
+                //anim.SetBool("IsMoving",true);
                 movePoint.position += new Vector3(0, 0, Input.GetAxisRaw("Vertical") * 2);
             }
         }
-        else if(Vector3.Distance(transform.position, movePoint.position) <= 0.05)
+        else if(GetMovementType())
         {
-            anim.SetBool("IsMoving",false);
+            //anim.SetBool("IsMoving",false);
+        }
+    }
+
+    bool GetMovementType()
+    {
+        if(moveType == typeOfMovement.OnKeyDown)
+        {
+            return Vector3.Distance(transform.position, movePoint.position) <= 0.05 && Input.anyKeyDown; 
+        }
+        else if(moveType == typeOfMovement.OnKey )
+        {
+            return (Vector3.Distance(transform.position, movePoint.position) <= 0.05 && actualTime > movementDelay);
+        }
+        else
+        {
+            return false;
         }
     }
 }
