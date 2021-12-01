@@ -23,13 +23,13 @@ public class PlayerMovement : MonoBehaviour
             if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1)
             {
                 //HACER ESTO UN ACTION
-                movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+                movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") * 2, 0, 0);
             }
 
             if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
             {
                 //HACER ESTO UN ACTION
-                movePoint.position += new Vector3(0, 0, Input.GetAxisRaw("Vertical"));
+                movePoint.position += new Vector3(0, 0, Input.GetAxisRaw("Vertical") * 2);
             }
         }
     }
