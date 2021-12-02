@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SC_VehicleController : MonoBehaviour
+public class VehicleController : MonoBehaviour
 {
     //Podria ser tranquilamente un scriptable object 
     [SerializeField] float velocity;
