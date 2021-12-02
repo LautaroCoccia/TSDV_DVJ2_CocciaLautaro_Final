@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] int lives = 3;
+    [SerializeField] int targets = 3;
     // Start is called before the first frame update
     void Start()
     {
