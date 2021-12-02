@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SC_VehicleController : MonoBehaviour
 {
+    //Podria ser tranquilamente un scriptable object 
     [SerializeField] float velocity;
     enum directionEnum
     {
@@ -11,23 +12,20 @@ public class SC_VehicleController : MonoBehaviour
         right
     }
     [SerializeField] directionEnum direction;
-    Vector3 startPosition;
-    Rigidbody rb;
+    [SerializeField] Vector3 startPosition;
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = transform.position;
-        rb = GetComponent<Rigidbody>();
+        if(startPosition == Vector3.zero)
+        {
+            startPosition = transform.position;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    void FixedUpdate() 
-    {
-        rb.velocity = velocity * GetDirection();
+        transform.Translate(velocity * GetDirection() * Time.deltaTime, Space.World);
     }
     private void OnCollisionEnter(Collision other) 
     {
@@ -36,7 +34,7 @@ public class SC_VehicleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        transform.position = startPosition;    
+        transform.position = startPosition;
     }
 
     Vector3 GetDirection()
