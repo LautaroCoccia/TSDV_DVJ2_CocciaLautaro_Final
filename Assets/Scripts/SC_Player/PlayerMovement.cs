@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+        
         if(GetMovementType())
         {
             float horizontalAxisValue = Input.GetAxisRaw("Horizontal");
@@ -63,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
             //anim.SetBool("IsMoving",false);
         }
     }
-
     bool GetMovementType()
     {
         if(moveType == typeOfMovement.OnKeyDown)
@@ -78,5 +78,10 @@ public class PlayerMovement : MonoBehaviour
         {
             return false;
         }
+    }
+    public void ResetPos()
+    {
+        transform.position = Vector3.zero;
+        movePoint.position = Vector3.zero;
     }
 }

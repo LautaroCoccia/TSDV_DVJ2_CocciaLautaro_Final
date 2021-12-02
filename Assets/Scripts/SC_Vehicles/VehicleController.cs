@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
-
-public class VehicleController : MonoBehaviour
+public class VehicleController : MonoBehaviour, IHitable
 {
+    public static Action OnHitPlayer; 
     //Podria ser tranquilamente un scriptable object 
     [SerializeField] float velocity;
     enum directionEnum
@@ -27,9 +28,9 @@ public class VehicleController : MonoBehaviour
     {
         transform.Translate(velocity * GetDirection() * Time.deltaTime, Space.World);
     }
-    private void OnCollisionEnter(Collision other) 
+    public void OnHit()
     {
-    
+        OnHitPlayer?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other) 
