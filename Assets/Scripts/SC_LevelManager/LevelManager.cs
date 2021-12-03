@@ -29,11 +29,9 @@ public class LevelManager : MonoBehaviour
     void UpdateLives()
     {
         lives--;
-        //ResetPlayerPos;
         if(lives <= 0)
         {
             Debug.Log("Perdiste");
         }
-
     }
 }
