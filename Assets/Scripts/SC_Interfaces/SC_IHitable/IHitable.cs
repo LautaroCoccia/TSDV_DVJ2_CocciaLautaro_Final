@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IHitable 
 {
     void OnHit();
+
+    bool OnHitMovePoint();
 }

@@ -32,7 +32,10 @@ public class VehicleController : MonoBehaviour, IHitable
     {
         OnHitPlayer?.Invoke();
     }
-
+    public bool OnHitMovePoint()
+    {
+        return false;
+    }
     private void OnTriggerEnter(Collider other) 
     {
         transform.position = startPosition;

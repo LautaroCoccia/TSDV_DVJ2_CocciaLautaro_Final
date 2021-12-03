@@ -6,6 +6,15 @@ public class MovePointController : MonoBehaviour
 {
     Vector3 prevPos;
     // Start is called before the first frame update
+    private void OnEnable() 
+    {
+        PlayerMovement.OnMovePointPosChange += SetPrevPos;
+    }
+
+    private void OnDisable() 
+    {
+        PlayerMovement.OnMovePointPosChange -= SetPrevPos;
+    }
     void Start()
     {
         
@@ -16,11 +25,18 @@ public class MovePointController : MonoBehaviour
     {
         
     }
-    void SetPrevPos(Vector3 newPrevPos)
+    void SetPrevPos()
     {
-        prevPos = newPrevPos;
+        prevPos = transform.position;
     }
-    private void OnCollisionEnter(Collision other) {
-        
+    private void OnCollisionEnter(Collision other) 
+    {
+        if(8 == other.gameObject.layer)
+        {
+            if(other.gameObject.GetComponent<IHitable>().OnHitMovePoint())
+            {
+                transform.position = prevPos;
+            }
+        }
     }
 }

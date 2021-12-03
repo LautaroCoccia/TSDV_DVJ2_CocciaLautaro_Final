@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -15,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     float actualTime;
     [SerializeField] Transform movePoint;
     //[SerializeField] Animator anim;
+
+    public static Action OnMovePointPosChange;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0, 90, 0);
                 //HACER ESTO UN ACTION
                 //anim.SetBool("IsMoving",true);
+                OnMovePointPosChange?.Invoke();
                 movePoint.position += new Vector3(horizontalAxisValue * 2, 0, 0);
             }
             else if (Mathf.Abs(verticalAxisValue) == 1)
@@ -56,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
                 //HACER ESTO UN ACTION
                 //anim.SetBool("IsMoving",true);
+                OnMovePointPosChange?.Invoke();
                 movePoint.position += new Vector3(0, 0, Input.GetAxisRaw("Vertical") * 2);
             }
         }
