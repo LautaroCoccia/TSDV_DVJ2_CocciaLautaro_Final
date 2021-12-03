@@ -22,5 +22,6 @@ public class BoxCollisionManager : MonoBehaviour, IHitable
     public void OnHit()
     {
         OnPlayerGoal?.Invoke(score);
+        gameObject.SetActive(false);
     }
 }

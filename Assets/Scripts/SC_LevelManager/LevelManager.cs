@@ -6,14 +6,17 @@ public class LevelManager : MonoBehaviour
 {
     
     [SerializeField] int lives = 3;
-    [SerializeField] int targets = 3;
+    [SerializeField] int maxBoxes = 5;
+    [SerializeField] int boxesCount = 0;
 
     private void OnEnable() 
     {
+        BoxCollisionManager.OnPlayerGoal += UpdateBoxes;
         VehicleController.OnHitPlayer += UpdateLives;
     }
     private void OnDisable() 
     {
+        BoxCollisionManager.OnPlayerGoal -= UpdateBoxes;
         VehicleController.OnHitPlayer -= UpdateLives;
     }
     // Start is called before the first frame update
@@ -34,4 +37,13 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Perdiste");
         }
     }
+
+    void UpdateBoxes(int nonUse)
+    {
+        boxesCount++;
+        if(boxesCount >= maxBoxes)
+        {
+            Debug.Log("Ganaste");
+        }
+    }   
 }
