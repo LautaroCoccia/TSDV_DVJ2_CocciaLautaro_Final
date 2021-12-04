@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - IHitable
+  - Player
+  - MovePoint
   - 
   - 
   - 
