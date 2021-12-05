@@ -57,7 +57,7 @@ public class SplashScreenController : MonoBehaviour
             companyLogoImage.color = color;
             yield return null;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.25f);
         time = 0;
         while (time < 2)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] int maxBoxes = 5;
     [SerializeField] int boxesCount = 0;
 
+    public static Action OnSetPause; 
+    //bool isPaused = false;
     private void OnEnable() 
     {
         BoxCollisionManager.OnPlayerGoal += UpdateBoxes;
@@ -27,7 +30,10 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UpdatePause();
+        }
     }
     void UpdateLives()
     {
@@ -37,7 +43,6 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Perdiste");
         }
     }
-
     void UpdateBoxes(int nonUse)
     {
         boxesCount++;
@@ -46,4 +51,10 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Ganaste");
         }
     }   
+    public void UpdatePause()
+    {
+        //isPaused = !isPaused;
+        
+        OnSetPause?.Invoke();
+    }
 }
