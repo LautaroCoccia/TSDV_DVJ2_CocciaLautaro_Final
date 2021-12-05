@@ -7,7 +7,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject pauseMenu; 
     [SerializeField] GameObject credits; 
     [SerializeField] GameObject returnMenu; 
-    [SerializeField] GameObject confirmMenu;
+    [SerializeField] GameObject loseScreen; 
+    [SerializeField] GameObject winScreen; 
 
     private void OnEnable() 
     {
@@ -29,36 +30,71 @@ public class UIManager : MonoBehaviour
        
     }
 
-    void UpdatePause()
+    void UpdatePause(LevelManager.gameState actualState)
     {
-        Debug.Log("HOLA");
-        if(!background.activeSelf)
+        if(LevelManager.gameState.playOrPause == actualState)
         {
-            background.SetActive(true);
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0;
+            if(!background.activeSelf)
+            {
+                background.SetActive(true);
+                pauseMenu.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else if(pauseMenu.activeSelf)
+            {
+                Debug.Log("Play");
+                background.SetActive(false);
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1;
+            }
+            else if(credits.activeSelf)
+            {
+                pauseMenu.SetActive(true);
+                credits.SetActive(false);
+            }
+            else if(returnMenu.activeSelf)
+            {
+                pauseMenu.SetActive(true);
+                returnMenu.SetActive(false);
+            }
         }
-        else if(pauseMenu.activeSelf)
+        else if(LevelManager.gameState.lose == actualState)
         {
-            Debug.Log("Play");
-            background.SetActive(false);
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1;
+            if(returnMenu.activeSelf)
+            {
+                loseScreen.SetActive(true);
+                returnMenu.SetActive(false);
+            }
+            else if(!loseScreen.activeSelf)
+            {
+                Time.timeScale = 0;
+                background.SetActive(true);
+                loseScreen.SetActive(true);
+            }
+            else if(loseScreen.activeSelf)
+            {
+                loseScreen.SetActive(false);
+                returnMenu.SetActive(true);
+            }
         }
-        else if(credits.activeSelf)
+        else if(LevelManager.gameState.win == actualState)
         {
-            pauseMenu.SetActive(true);
-            credits.SetActive(false);
-        }
-        else if(returnMenu.activeSelf)
-        {
-            pauseMenu.SetActive(true);
-            returnMenu.SetActive(false);
-        }
-        else if(confirmMenu.activeSelf)
-        {
-            returnMenu.SetActive(true);
-            confirmMenu.SetActive(false);
+            if(returnMenu.activeSelf)
+            {
+                winScreen.SetActive(true);
+                returnMenu.SetActive(false);
+            }
+            else if(!winScreen.activeSelf)
+            {
+                Time.timeScale = 0;
+                background.SetActive(true);
+                winScreen.SetActive(true);
+            }
+            else if(winScreen.activeSelf)
+            {
+                winScreen.SetActive(false);
+                returnMenu.SetActive(true);
+            }
         }
     }
     

@@ -10,7 +10,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] int maxBoxes = 5;
     [SerializeField] int boxesCount = 0;
 
-    public static Action OnSetPause; 
+    public enum gameState
+    {
+        win,
+        lose,
+        playOrPause
+    }
+    gameState actualState;
+    public static Action<gameState> OnSetPause; 
     //bool isPaused = false;
     private void OnEnable() 
     {
@@ -25,7 +32,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        actualState = gameState.playOrPause;
     }
     // Update is called once per frame
     void Update()
@@ -40,7 +47,8 @@ public class LevelManager : MonoBehaviour
         lives--;
         if(lives <= 0)
         {
-            Debug.Log("Perdiste");
+            actualState = gameState.lose;
+            OnSetPause?.Invoke(actualState);
         }
     }
     void UpdateBoxes(int nonUse)
@@ -48,13 +56,14 @@ public class LevelManager : MonoBehaviour
         boxesCount++;
         if(boxesCount >= maxBoxes)
         {
-            Debug.Log("Ganaste");
+            actualState = gameState.win;
+            OnSetPause?.Invoke(actualState);
         }
     }   
     public void UpdatePause()
     {
         //isPaused = !isPaused;
         
-        OnSetPause?.Invoke();
+        OnSetPause?.Invoke(actualState);
     }
 }
