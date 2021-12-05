@@ -38,7 +38,10 @@ public class VehicleController : MonoBehaviour, IHitable
     }
     private void OnTriggerEnter(Collider other) 
     {
-        transform.position = startPosition;
+        if(11 == other.gameObject.layer)
+        {
+            transform.position = startPosition;
+        }
     }
 
     Vector3 GetDirection()
