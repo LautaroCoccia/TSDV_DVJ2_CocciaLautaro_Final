@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,6 +10,8 @@ public class SplashScreenController : MonoBehaviour
     [SerializeField] Image gameLogoImage;
     [SerializeField] TextMeshProUGUI startText;
     [SerializeField] Animator splashAnimator;
+
+    public static Action<string> OnLoadNextLevel;
     bool canStart = false;
     float time;
 
@@ -28,6 +31,8 @@ public class SplashScreenController : MonoBehaviour
             if(Input.anyKey)
             {
                 splashAnimator.SetBool("AnyKeyPressed", true);
+                canStart = false;
+                OnLoadNextLevel?.Invoke("MainMenu");
             }
             
 
