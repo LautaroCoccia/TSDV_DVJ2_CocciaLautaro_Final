@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] int score = 0;
+
+    public static Action<int> OnUpdateScore;
     private void OnEnable() 
     {
         BoxCollisionManager.OnPlayerGoal += UpdateScore;
@@ -16,15 +18,11 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        OnUpdateScore?.Invoke(score);
     }
     void UpdateScore(int newScore)
     {
         score += newScore;
+        OnUpdateScore?.Invoke(score);
     }
 }
