@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
 
     
     [Header("UI Objects")]
+    [SerializeField] GameObject startLevel; 
     [SerializeField] GameObject background; 
     [SerializeField] GameObject pauseMenu; 
     [SerializeField] GameObject credits; 
@@ -31,11 +32,13 @@ public class UIManager : MonoBehaviour
         LevelManager.OnUpdateTime += UIUpdateTime;
         LevelManager.OnUpdateBoxes += UIUpdateBoxes;
         LevelManager.OnUpdateLives += UIUpdateLives;
+        LevelManager.OnStartLevel += UIUpdateStart;
         ScoreManager.OnUpdateScore += UIUpdateScore;
     }
     private void OnDisable() 
     {
         ScoreManager.OnUpdateScore -= UIUpdateScore;
+        LevelManager.OnStartLevel -= UIUpdateStart;
         LevelManager.OnUpdateLives -= UIUpdateLives;
         LevelManager.OnUpdateBoxes -= UIUpdateBoxes;
         LevelManager.OnUpdateTime -= UIUpdateTime;
@@ -139,5 +142,11 @@ public class UIManager : MonoBehaviour
     {
         scoreText.text = score.ToString();
         finalScoreText.text = scoreText.text;
+    }
+
+    void UIUpdateStart()
+    {
+        startLevel.SetActive(false);
+        background.SetActive(false);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : MonoBehaviourSingleton<ScoreManager>
 {
     [SerializeField] int score = 0;
 
@@ -24,5 +24,9 @@ public class ScoreManager : MonoBehaviour
     {
         score += newScore;
         OnUpdateScore?.Invoke(score);
+    }
+    public void ResetScore()
+    {
+        score = 0;
     }
 }

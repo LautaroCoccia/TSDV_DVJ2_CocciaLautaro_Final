@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
 
     public enum gameState
     {
+        start,
         win,
         lose,
         playOrPause
@@ -23,7 +24,8 @@ public class LevelManager : MonoBehaviour
     public static Action<gameState> OnSetPause; 
     public static Action<int,int> OnUpdateBoxes; 
     public static Action<int,int> OnUpdateTime;
-    public static Action<int> OnUpdateLives; 
+    public static Action<int> OnUpdateLives;
+    public static Action OnStartLevel;
     //bool isPaused = false;
     private void OnEnable() 
     {
@@ -38,14 +40,24 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        actualState = gameState.playOrPause;
+        actualState = gameState.start;
+        Time.timeScale = 0;
         OnUpdateBoxes?.Invoke(boxesCount,maxBoxes);
         OnUpdateLives?.Invoke(lives);
     }
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(actualState == gameState.start)
+        {
+            if(Input.anyKey)
+            {
+                Time.timeScale = 1;
+                OnStartLevel?.Invoke();
+                actualState = gameState.playOrPause;
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Escape) && actualState != gameState.start)
         {
             UpdatePause();
         }
