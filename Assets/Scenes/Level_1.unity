@@ -9806,7 +9806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 3
   maxBoxes: 5
-  boxesCount: 4
+  boxesCount: 0
 --- !u!1 &1102339792
 GameObject:
   m_ObjectHideFlags: 0
