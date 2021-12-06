@@ -116,7 +116,6 @@ public class UIManager : MonoBehaviour
             }
             else if(winScreen.activeSelf)
             {
-                Debug.Log("HOAL");
                 winScreen.SetActive(false);
                 finalStats.SetActive(false);
                 returnMenu.SetActive(true);

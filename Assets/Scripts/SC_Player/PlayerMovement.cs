@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float movementDelay = 0.25f;
     float actualTime;
     [SerializeField] Transform movePoint;
+    [SerializeField] Transform modelTransform;
     //[SerializeField] Animator anim;
 
     public static Action OnMovePointPosChange;
@@ -42,9 +43,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 actualTime = 0;
                 if(horizontalAxisValue < 0)
-                    transform.rotation = Quaternion.Euler(0, -90, 0);
+                    modelTransform.rotation = Quaternion.Euler(0, -90, 0);
                 else
-                    transform.rotation = Quaternion.Euler(0, 90, 0);
+                    modelTransform.rotation = Quaternion.Euler(0, 90, 0);
                 //HACER ESTO UN ACTION
                 //anim.SetBool("IsMoving",true);
                 OnMovePointPosChange?.Invoke();
@@ -54,9 +55,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 actualTime = 0;
                 if (verticalAxisValue < 0)
-                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                    modelTransform.rotation = Quaternion.Euler(0, 180, 0);
                 else
-                    transform.rotation = Quaternion.identity;
+                    modelTransform.rotation = Quaternion.identity;
 
                 //HACER ESTO UN ACTION
                 //anim.SetBool("IsMoving",true);

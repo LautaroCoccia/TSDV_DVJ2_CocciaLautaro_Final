@@ -34,8 +34,6 @@ public class SplashScreenController : MonoBehaviour
                 canStart = false;
                 OnLoadNextLevel?.Invoke("MainMenu");
             }
-            
-
         }
     }
     IEnumerator Fade()
